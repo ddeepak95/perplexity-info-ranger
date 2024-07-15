@@ -1,0 +1,4 @@
+.env
+.venv
+.serverless
+__pycache__

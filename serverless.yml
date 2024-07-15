@@ -1,0 +1,23 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: ddeepak95
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: info-ranger
+service: info-ranger
+
+provider:
+  name: aws
+  runtime: python3.10
+
+functions:
+  daily_tasks:
+    handler: handler.daily_research
+    events:
+      - schedule: cron(30 0 * * ? *)
+  weekly_tasks:
+    handler: handler.weekly_research
+    events:
+      - schedule: cron(30 22 ? * 3 *)
+  monthly_tasks:
+    handler: handler.monthly_research
+    events:
+      - schedule: cron(0 13 15 * ? *)
