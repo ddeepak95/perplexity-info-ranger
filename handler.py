@@ -4,6 +4,8 @@ from message_functions import construct_search_url, contruct_news_html_email_con
 from ai_functions import chat_completion_pplx
 from json_functions import pretty_print, write_json, parse_string_to_json, read_json
 from mailgun_functions import send_html_email
+from telegram_functions import send_message_telegram, format_news_content_telegram
+import asyncio
 
 
 logger = logging.getLogger(__name__)
@@ -22,27 +24,31 @@ monthly_queries = [
     {"title" : "Investment Opportunities", "description":"What are the upcoming investment opportunities in India and US with a potential for long-term growth? What are the areas with growing demand and innovation? Focus on sectors such as technology, energy, and consumer goods with a macro-economic perspective. Be descriptive in the description."}
 ]
 
-def send_research_emails(queries, query_type):
+def research_and_send(queries, query_type):
     todays_date = datetime.datetime.now().strftime("%b %d, %Y")
     for query in queries:
         direct_link = construct_search_url(query["description"])
         news_response = chat_completion_pplx(model, system_message, query['description'])
-        news_content = parse_string_to_json(news_response['choices'][0]['message']['content'])
+        news_content = parse_string_to_json(news_response['choices'][0]['message']['content']) 
         # Check if the response is in the correct format
         while not isinstance(news_content, list) or not all('title' in item and 'description' in item for item in news_content):
             news_response = chat_completion_pplx(model, system_message, query['description'])
             news_content = parse_string_to_json(news_response['choices'][0]['message']['content'])
 
         email_content = contruct_news_html_email_content(news_content, direct_link)
+        asyncio.run(send_message_telegram(format_news_content_telegram(query["title"], news_content), direct_link))
         send_html_email(query["title"], to_email, f"{query['title']}: {todays_date}", email_content)
         logger.info(f"Sent email for {query['title']}")
 
 def daily_research(event, context):
-    send_research_emails(daily_queries, "daily")
+    research_and_send(daily_queries, "daily")
 
 def weekly_research(event, context):
-    send_research_emails(weekly_queries, "weekly")
+    research_and_send(weekly_queries, "weekly")
 
 def monthly_research(event, context):
-    send_research_emails(monthly_queries, "monthly")
+    research_and_send(monthly_queries, "monthly")
+
+
+
 
