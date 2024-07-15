@@ -21,3 +21,6 @@ functions:
     handler: handler.monthly_research
     events:
       - schedule: cron(0 13 15 * ? *)
+
+plugins:
+  - serverless-python-requirements

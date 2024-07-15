@@ -37,12 +37,12 @@ def send_research_emails(queries, query_type):
         send_html_email(query["title"], to_email, f"{query['title']}: {todays_date}", email_content)
         logger.info(f"Sent email for {query['title']}")
 
-def daily_research():
+def daily_research(event, context):
     send_research_emails(daily_queries, "daily")
 
-def weekly_research():
+def weekly_research(event, context):
     send_research_emails(weekly_queries, "weekly")
 
-def monthly_research():
+def monthly_research(event, context):
     send_research_emails(monthly_queries, "monthly")
 
