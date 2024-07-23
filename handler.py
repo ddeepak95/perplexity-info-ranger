@@ -14,19 +14,44 @@ model = "llama-3-sonar-large-32k-online"
 system_message = "You are an expert researcher. The output should be a json in the format without any other text: [{'title': 'title', 'description': 'description'},...]"
 to_email = "ddeepak95@gmail.com"
 daily_queries = [
-    {"title":"Current Affairs", "description":"Get the top headlines from India and across the world from yesterday till today. The outputs should not include minor criminal activities and accidents. Be descriptive in the news description."},
+    {"title":"Current Affairs", "description":"Get the top headlines from India and across the world from {yesterday} till {today}. The outputs should not include minor criminal activities and accidents. Be descriptive in the news description. Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."},
 ]
 weekly_queries = [
-    {"title":"Business and Economy", "description":"Get the top business and economy news from the past week. Be descriptive in the news description. Focus on the major events, trends, and macro-economic happenings that could be useful for an investor. Focus on India and US demographics."},
-    {"title":"Energy and Climate Change", "description":"Get the top news related to Energy and Climate Change from the past week. Be descriptive in the news description. Focus on the major events, trends, businesses, and macro-economic happenings that could be useful for an investor. Focus on India and US demographics."},
+    {"title":"Business and Economy", "description":"Get the top business and economy news {from_last_week}. Be descriptive in the news description. Focus on the major events, trends, and macro-economic happenings that could be useful for an investor. Focus on India and US demographics. Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."},
+    {"title":"Energy and Climate Change", "description":"Get the top news related to Energy and Climate Change {from_last_week}. Be descriptive in the news description. Focus on the major events, trends, businesses, and macro-economic happenings that could be useful for an investor. Focus on India and US demographics.  Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."},
 ]
 monthly_queries = [
-    {"title" : "Investment Opportunities", "description":"What are the upcoming investment opportunities in India and US with a potential for long-term growth? What are the areas with growing demand and innovation? Focus on sectors such as technology, energy, and consumer goods with a macro-economic perspective. Be descriptive in the description."}
+    {"title" : "Investment Opportunities", "description":"Considering the news {from_last_month}, What are the upcoming investment opportunities in India and US with a potential for long-term growth? What are the areas with growing demand and innovation? Focus on sectors such as technology, energy, and consumer goods with a macro-economic perspective. Be descriptive in the description.  Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."}
 ]
+
+def calculate_past_date(days):
+    return (datetime.datetime.now() - datetime.timedelta(days=days)).strftime("%b %d, %Y")
+
+def parse_date_keys_to_dates(description):
+    today = datetime.datetime.now().strftime("%b %d, %Y")
+    yesterday = calculate_past_date(1)
+    from_last_week = f"from {calculate_past_date(8)} to {today}"
+    from_last_month = f"from {calculate_past_date(32)} to {today}"
+
+    # Dictionary to map placeholders to their corresponding date values
+    date_replacements = {
+        "{today}": today,
+        "{yesterday}": yesterday,
+        "{from_last_week}": from_last_week,
+        "{from_last_month}": from_last_month
+    }
+
+    # Replace the placeholders in the description
+    for placeholder, date_value in date_replacements.items():
+        description = description.replace(placeholder, date_value)
+    
+    return description
+
 
 def research_and_send(queries, query_type):
     todays_date = datetime.datetime.now().strftime("%b %d, %Y")
     for query in queries:
+        query["description"] = parse_date_keys_to_dates(query["description"])
         direct_link = construct_search_url(query["description"])
         news_response = chat_completion_pplx(model, system_message, query['description'])
         news_content = parse_string_to_json(news_response['choices'][0]['message']['content']) 

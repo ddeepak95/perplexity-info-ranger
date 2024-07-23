@@ -7,18 +7,27 @@ service: info-ranger
 provider:
   name: aws
   runtime: python3.10
+  environment:
+    PPLX_API_KEY: ${env:PPLX_API_KEY}
+    MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
+    MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
+    TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
+    TELEGRAM_CHANNEL_ID: ${env:TELEGRAM_CHANNEL_ID}
 
 functions:
   daily_tasks:
     handler: handler.daily_research
+    timeout: 900
     events:
       - schedule: cron(30 0 * * ? *)
   weekly_tasks:
     handler: handler.weekly_research
+    timeout: 900
     events:
       - schedule: cron(30 22 ? * 3 *)
   monthly_tasks:
     handler: handler.monthly_research
+    timeout: 900
     events:
       - schedule: cron(0 13 15 * ? *)
 
