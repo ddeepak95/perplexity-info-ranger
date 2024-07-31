@@ -10,7 +10,7 @@ import asyncio
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-model = "llama-3-sonar-large-32k-online"
+model = "llama-3.1-sonar-large-128k-online"
 system_message = "You are an expert researcher. The output should be a json in the format without any other text: [{'title': 'title', 'description': 'description'},...]"
 to_email = "ddeepak95@gmail.com"
 daily_queries = [
