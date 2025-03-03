@@ -1,30 +1,43 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
 org: ddeepak95
-# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
-app: info-ranger
-service: info-ranger
+app: perplexity-info-ranger
+service: perplexity-info-ranger
 
 provider:
   name: aws
   runtime: python3.10
   environment:
     PPLX_API_KEY: ${env:PPLX_API_KEY}
-    MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
-    MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
     TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
     TELEGRAM_CHANNEL_ID: ${env:TELEGRAM_CHANNEL_ID}
+
+package:
+  patterns:
+    - "!**" # Exclude everything first
+    - "**/*.py" # Include all Python files recursively
+    - "requirements.txt" # Include dependencies list
+    - "!node_modules/**" # Exclude Node.js dependencies
+    - "!__pycache__/**" # Exclude compiled Python cache
+    - "!*.pyc" # Exclude compiled Python files
+    - "!*.pyo"
+    - "!*.git/**" # Exclude Git files
+    - "!*.venv/**" # Exclude virtual environments
+    - "!venv/**" # Some virtual environments use "venv" instead of ".venv"
+    - "!.serverless/**" # Exclude the Serverless deployment folder
+    - "!tests/**" # Exclude test files (if not needed)
 
 functions:
   daily_tasks:
     handler: handler.daily_research
     timeout: 900
     events:
-      - schedule: cron(30 0 * * ? *)
+      - schedule: cron(0 10 * * ? *)
+
   weekly_tasks:
     handler: handler.weekly_research
     timeout: 900
     events:
-      - schedule: cron(30 22 ? * 3 *)
+      - schedule: cron(0 12 ? * SUN *)
+
   monthly_tasks:
     handler: handler.monthly_research
     timeout: 900
@@ -33,3 +46,11 @@ functions:
 
 plugins:
   - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    slim: true
+    noDeploy:
+      - boto3
+      - botocore
+      - numpy
