@@ -93,7 +93,17 @@ info-ranger/
 
 ## Deployment
 
-1. **Deploy to AWS using Serverless Framework**
+1. **Update the serverless.yml configuration**
+
+   After adding custom queries, run the generator script to update your serverless.yml:
+
+   ```bash
+   python generate_serverless_config.py
+   ```
+
+   Ensure that the org is set to your AWS account name.
+
+2. **Deploy to AWS using Serverless Framework**
 
    ```bash
    serverless deploy
@@ -101,7 +111,7 @@ info-ranger/
 
    This will deploy the application to AWS Lambda with the configured schedules.
 
-2. **Verify deployment**
+3. **Verify deployment**
 
    After deployment, you should see output with details about the deployed functions and endpoints.
 
