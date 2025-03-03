@@ -40,7 +40,7 @@ info-ranger/
 - [Serverless Framework](https://www.serverless.com/) CLI
 - [AWS CLI](https://aws.amazon.com/cli/) configured with appropriate credentials
 - Perplexity AI API key
-- Telegram Bot Token and Channel ID
+- Telegram Bot Token and Channel ID (Refer to the [Telegram Bot and Channel](#telegram-bot-and-channel) section for how to get them)
 
 ## Setup
 
