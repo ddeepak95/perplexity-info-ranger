@@ -58,7 +58,7 @@ def chat_completion_pplx(model, system_message, user_message, response_format=No
     }
 
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=60)
+        response = requests.post(url, json=payload, headers=headers, timeout=600)
         response.raise_for_status()  # Raise exception for 4XX/5XX responses
         
         json_response = response.json()

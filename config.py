@@ -12,7 +12,7 @@ Users can easily modify this file to add, remove, or change queries and their fr
 DAILY_QUERIES = [
     {
         "title": "Current Affairs",
-        "description": "Get the top headlines from India and across the world from {yesterday} till {today}. The outputs should not include minor criminal activities and accidents. Be descriptive in the news description. Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."
+        "description": "Get the top headlines from India, US and the world for {today}. The outputs should not include minor criminal activities and minoraccidents. Be descriptive in the news description. Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."
     },
     # Add more daily queries here
 ]
