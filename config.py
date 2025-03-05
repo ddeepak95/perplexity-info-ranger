@@ -12,7 +12,7 @@ Users can easily modify this file to add, remove, or change queries and their fr
 DAILY_QUERIES = [
     {
         "title": "Current Affairs",
-        "description": "Get the top headlines from India, US and the world for {today}. The outputs should not include minor criminal activities and minoraccidents. Be descriptive in the news description. Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."
+        "description": "Get the top headlines from India, US and the world for {today}. The news should cover politics, economy, sports, entertainment, and technology. The outputs should not include minor criminal activities and minor accidents. Be descriptive in the news description. Include the date in which the news got published in the description. Don't include any news outside the date frame in the prompt."
     },
     # Add more daily queries here
 ]
@@ -63,7 +63,7 @@ CUSTOM_QUERIES = [
 MODEL = "sonar-pro"
 
 # System message for the AI
-SYSTEM_MESSAGE = """You are an expert news curator and researcher. You have to find the most relevant news for the user. Include at least 5 news in your response.
+SYSTEM_MESSAGE = """You are an expert news curator and researcher. You have to find the most relevant news for the user. Include at least 8 news items in your response.
 Please output in the following format. Do not include any other text in your response.
 
 *Title 1*
