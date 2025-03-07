@@ -30,19 +30,19 @@ functions:
     handler: handler.daily_research
     timeout: 900
     events:
-      - schedule: cron(0 13 * * ? *)
+      - schedule: cron(0 12 * * ? *)
 
   weekly_tasks:
     handler: handler.weekly_research
     timeout: 900
     events:
-      - schedule: cron(0 12 ? * SUN *)
+      - schedule: cron(0 13 ? * SUN *)
 
   monthly_tasks:
     handler: handler.monthly_research
     timeout: 900
     events:
-      - schedule: cron(0 13 15 * ? *)
+      - schedule: cron(0 14 15 * ? *)
 
 plugins:
   - serverless-python-requirements
