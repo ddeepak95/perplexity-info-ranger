@@ -84,6 +84,7 @@ info-ranger/
    PPLX_API_KEY=your_perplexity_ai_api_key
    TELEGRAM_BOT_TOKEN=your_telegram_bot_token
    TELEGRAM_CHANNEL_ID=your_telegram_channel_id
+   OPENAI_API_KEY=your_openai_api_key
    ```
 
 5. **Configure AWS credentials**
@@ -253,6 +254,8 @@ This allows you to verify that your queries are working correctly before deployi
 - **Missing Dependencies**: Make sure all dependencies are listed in `requirements.txt`
 - **Telegram Errors**: Verify the bot has proper permissions in the channel
 - **Custom Query Not Running**: Check that the cron expression is valid and that the function was added to serverless.yml
+- **Formatting Issues**: If news isn't formatting correctly, check the `FORMATTING_MODEL` configuration and ensure your OpenAI API key is valid
+- **Message Size Errors**: If you receive errors about message size, the application will automatically split messages, but you may need to adjust your queries to return less content
 
 ## License
 
@@ -261,7 +264,3 @@ This allows you to verify that your queries are working correctly before deployi
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Environment Variables
-
-Create a `.env` file in the project root with the following variables:
