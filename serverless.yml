@@ -30,7 +30,7 @@ functions:
     handler: handler.daily_research
     timeout: 900
     events:
-      - schedule: cron(0 10 * * ? *)
+      - schedule: cron(0 13 * * ? *)
 
   weekly_tasks:
     handler: handler.weekly_research
