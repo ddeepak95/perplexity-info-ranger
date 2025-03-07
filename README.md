@@ -2,6 +2,10 @@
 
 Perplexity Info Ranger is an automated news curation and research tool that uses Perplexity AI to gather relevant news and information on various topics from the web and sends them to a Telegram channel. The tool also uses OpenAI to format the news content into structured, readable messages. The application runs as a serverless function on AWS Lambda, scheduled to execute at specific intervals.
 
+## Example Screenshot
+
+![Perplexity Info Ranger](https://i.imgur.com/FrhPQXW.jpeg)
+
 ## Features
 
 - **Daily Updates**: Automatically collect information on your chosen topics every day
