@@ -4,7 +4,7 @@ Perplexity Info Ranger is an automated news curation and research tool that uses
 
 ## Example Screenshot
 
-![Perplexity Info Ranger](https://i.imgur.com/FrhPQXW.jpeg)
+<img src="https://i.imgur.com/FrhPQXW.jpeg" alt="Perplexity Info Ranger Screenshot" width="300" />
 
 ## Features
 
