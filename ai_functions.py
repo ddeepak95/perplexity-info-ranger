@@ -4,6 +4,8 @@ import os
 import logging
 import json
 from requests.exceptions import RequestException, Timeout, HTTPError
+from pydantic import BaseModel
+from openai import OpenAI
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -15,6 +17,10 @@ PPLX_API_KEY = os.getenv("PPLX_API_KEY")
 
 class PerplexityAPIError(Exception):
     """Custom exception for Perplexity API errors"""
+    pass
+
+class OpenAIAPIError(Exception):
+    """Custom exception for OpenAI API errors"""
     pass
 
 def chat_completion_pplx(model, system_message, user_message, response_format=None):
@@ -89,3 +95,34 @@ def chat_completion_pplx(model, system_message, user_message, response_format=No
     except Exception as e:
         logger.error(f"Unexpected error when calling Perplexity API: {str(e)}")
         raise PerplexityAPIError(f"Unexpected error when calling Perplexity API: {str(e)}")
+    
+
+def chat_completion_openai(model, system_message, user_message, response_format=None):
+    """
+    This function is used to chat with the OpenAI API.
+    model: The model to use.
+    system_message: The system message.
+    user_message: The user message.
+    response_format: Optional format of the response.
+    
+    Returns: Content of the response message
+    Raises: OpenAIAPIError if the API call fails
+    """
+    try:
+        client = OpenAI()
+        response = client.beta.chat.completions.parse(
+            model=model, 
+            messages=[
+                {"role": "system", "content": system_message}, 
+                {"role": "user", "content": user_message}
+            ], 
+            response_format=response_format
+        )
+        return response.choices[0].message.content
+        
+    except Timeout:
+        logger.error("Request to OpenAI API timed out")
+        raise OpenAIAPIError("Request to OpenAI API timed out")
+    except Exception as e:
+        logger.error(f"Error making request to OpenAI API: {str(e)}")
+        raise OpenAIAPIError(f"Error making request to OpenAI API: {str(e)}")

@@ -1,6 +1,6 @@
 # Perplexity Info Ranger
 
-Perplexity Info Ranger is an automated news curation and research tool that uses Perplexity AI to gather relevant news and information on various topics from the web and sends them to a Telegram channel. The application runs as a serverless function on AWS Lambda, scheduled to execute at specific intervals.
+Perplexity Info Ranger is an automated news curation and research tool that uses Perplexity AI to gather relevant news and information on various topics from the web and sends them to a Telegram channel. The tool also uses OpenAI to format the news content into structured, readable messages. The application runs as a serverless function on AWS Lambda, scheduled to execute at specific intervals.
 
 ## Features
 
@@ -9,6 +9,9 @@ Perplexity Info Ranger is an automated news curation and research tool that uses
 - **Monthly Insights**: Obtain comprehensive monthly analyses on topics of interest
 - **Custom Frequency**: Define your own schedules for specialized information needs
 - **AI-Powered Research**: Leverage Perplexity AI to gather comprehensive and relevant information
+- **Structured News Format**: News is organized by categories with titles, descriptions, and source links
+- **Smart Formatting**: Uses OpenAI to format news content into structured, readable messages
+- **Message Size Management**: Automatically splits large messages for Telegram's character limits
 - **Automated Delivery**: Send formatted results directly to your Telegram channel
 - **Serverless Architecture**: Run on AWS Lambda with minimal maintenance and operational costs
 - **Fully Customizable**: Easily add, modify, or remove topics and adjust scheduling to suit your needs
@@ -185,9 +188,25 @@ You can use the following placeholders in your query descriptions:
 - `{from_last_week}`: Date range from 8 days ago to today
 - `{from_last_month}`: Date range from 32 days ago to today
 
-### Modifying the AI Model
+### Modifying the AI Models
 
-You can change the AI model used by modifying the `MODEL` variable in `config.py`.
+You can change the AI models used by modifying these variables in `config.py`:
+
+- `MODEL`: The main model used for gathering news information (Perplexity AI)
+- `FORMATTING_MODEL`: The model used for formatting news content into structured JSON (OpenAI)
+- `SYSTEM_MESSAGE`: The system prompt that guides the AI's response style
+
+### News Formatting
+
+The application formats news into a structured format with:
+
+- Categories of news (e.g., "Technology", "Business", "Science")
+- Individual news items within each category containing:
+  - Title: The headline of the news
+  - Description: A summary or details about the news
+  - Link: Source URL for the news item
+
+This structured format makes the news easier to read and navigate in Telegram messages.
 
 ## Testing Locally
 
@@ -242,3 +261,7 @@ This allows you to verify that your queries are working correctly before deployi
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Environment Variables
+
+Create a `.env` file in the project root with the following variables:

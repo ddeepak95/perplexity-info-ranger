@@ -60,20 +60,27 @@ CUSTOM_QUERIES = [
 ]
 
 # AI Model configuration
-MODEL = "sonar-pro"
+MODEL = "sonar-reasoning-pro"
+FORMATTING_MODEL = "gpt-4o"
 
 # System message for the AI
-SYSTEM_MESSAGE = """You are an expert news curator and researcher. You have to find the most relevant news for the user. Include at least 8 news items in your response.
+SYSTEM_MESSAGE = """You are an expert news curator and researcher. You have to find the most relevant news for the user. Include at least 8 news items in your response. Do not hallucinate and include news that are not present in the requested date range.
 Please output in the following format. Do not include any other text in your response.
 
-*Title 1*
+<b><i>Sub Topic 1</i></b>
+
+<b>Title 1</b>
 Description 1
 
-*Title 2*
+<b>Title 2</b>
 Description 2
 
 ...
 """
+
+MAX_RETRIES = 3
+
+
 
 # Configuration validation
 def validate_query_config(query, query_type):
