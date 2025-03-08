@@ -4,11 +4,13 @@ service: perplexity-info-ranger
 
 provider:
   name: aws
-  runtime: python3.10
+  runtime: python3.11
+  architecture: x86_64
   environment:
     PPLX_API_KEY: ${env:PPLX_API_KEY}
     TELEGRAM_BOT_TOKEN: ${env:TELEGRAM_BOT_TOKEN}
     TELEGRAM_CHANNEL_ID: ${env:TELEGRAM_CHANNEL_ID}
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
 
 package:
   patterns:
@@ -54,3 +56,6 @@ custom:
       - boto3
       - botocore
       - numpy
+    dockerizePip: true
+    useDownloadCache: true
+    useStaticCache: true

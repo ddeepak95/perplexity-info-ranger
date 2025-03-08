@@ -46,6 +46,7 @@ info-ranger/
 - [Python](https://www.python.org/) (3.10)
 - [Serverless Framework](https://www.serverless.com/) CLI
 - [AWS CLI](https://aws.amazon.com/cli/) configured with appropriate credentials
+- [Docker](https://www.docker.com/) - For maintaing dependencies in AWS Lambda
 - Perplexity AI API key
 - OpenAI API key
 - Telegram Bot Token and Channel ID (Refer to the [Telegram Bot and Channel](#telegram-bot-and-channel) section for how to get them)
